@@ -6,8 +6,8 @@ import static.Commands._
 
 object Main {
 
-  final val fileIn = "test.json"
-  final val fileOut = "resp.json"
+  final val fileIn = "src/test/resources/in.json"
+  final val fileOut = "src/test/resources/resp.json"
 
   def main(args: Array[String]): Unit = {
     val json = IOUtils.readJSONfromFile(fileIn)

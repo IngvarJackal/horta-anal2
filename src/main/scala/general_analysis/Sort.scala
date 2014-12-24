@@ -6,7 +6,7 @@ import utils.IOUtils
 
 object Sort {
 
-  private case class JSON_outSort(status: String, response: Map[String, Int]) extends JSON_out
+  case class JSON_outSort(status: String, response: Map[String, Int]) extends JSON_out
 
   private def makeSortedJSON(data: Map[String, Int], task:String):JSON_out = {
     JSON_outSort(s"$task : ${Response.successResponse}", data)
@@ -25,7 +25,7 @@ object Sort {
   private def sorting(users:Array[String], msgLengths: Array[Int], bound:Int):Map[String, Int] = {
     val counts = scala.collection.mutable.Map[String, Int]()
     for ((usr, len) <- (users zip msgLengths)) {
-      counts(usr) = counts.getOrElse(usr, 0) + 1
+      counts(usr) = counts.getOrElse(usr, 0) + len
     }
 
     val sortedList = counts.toList.sortBy({_._2}).reverse
@@ -64,7 +64,8 @@ object Sort {
       val users = messages.foldLeft(Array[String]())(addUsers)
       val msgLengths = messages.foldLeft(Array[Int]())(addLengths)
       val counts = sorting(users, msgLengths, bound)
-      makeSortedJSON(counts.toMap, task)
+      val a = makeSortedJSON(counts.toMap, task)
+      a
     }
 
     args match {
